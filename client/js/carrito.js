@@ -59,6 +59,9 @@ function mostrarProductos(prod) {
 
     localStorage.setItem("suma", suma);
 
+
+
+
     let botonesDisminuir = document.querySelectorAll(".bajarCantidad");
     botonesDisminuir.forEach(boton => {
         boton.addEventListener("click", disminuirCantidad);
@@ -130,7 +133,7 @@ async function vaciarCarrito() {
 }
 
 function siguientePantalla() {
-    window.location = "http://localhost:3000/html/carrito1.html";
+    window.location = `http://tp-forhome.herokuapp.com/html/carrito1.html`;
 }
 
 if (document.getElementById('btn-siguiente') != undefined) {
@@ -185,7 +188,7 @@ async function crearFactura(productos) {
         "idUsuario": window.sessionStorage.getItem("idUser"),
         "idLocal": 1
     }
-    let respuesta = await fetch("http://localhost:3000/factura", {
+    let respuesta = await fetch("/factura", {
 
         method: 'POST',
         headers: {
@@ -207,7 +210,7 @@ async function actualizarStock(productos) {
     let url = "";
     let artVendidos = 0;
     for (let i = 0; i < productos.length; i++) {
-        url = `http://localhost:3000/articulo/${productos[i].CARRITO_idArticulo}`;
+        url = `/articulo/${productos[i].CARRITO_idArticulo}`;
         artVendidos = {
             cantidad: productos[i].CARRITO_cantidad
         }
@@ -220,8 +223,10 @@ async function actualizarStock(productos) {
         });
         if (!respuesta.ok) {
             console.log("error");
+
         }
     }
+
 }
 
 async function obtenerCarrito() {

@@ -1,5 +1,7 @@
 "use strict";
 
+let prod = "tp-forhome.herokuapp.com";
+
 // NodeList con imágenes secundarias.
 let listadoImagenes = document.querySelectorAll(".img-detalle-articulo .img-secundarias .img");
 // Imagen principal de detalle producto
@@ -75,7 +77,10 @@ async function cargarArticulos(categoria) {
 listadoImagenes.forEach(img => {
     img.addEventListener('click', function (e) {
         e.preventDefault();
-        if (img.src != window.location.href) {
+        // if (img.src != window.location.href) {
+        //     imagenPrincipal.src = img.src
+        // }
+        if (img.src != "") {
             imagenPrincipal.src = img.src
         }
     });
@@ -88,11 +93,11 @@ btnCompra.addEventListener("click", redireccionar);
 //>>>>>>> para comprar controlo que ya este logueado
 function redireccionar() {
     if (!window.sessionStorage.getItem("userLogged")) {
-        window.location = "http://localhost:3000/html/loginUser.html";
+        window.location = `http://${prod}/html/loginUser.html`;
     }
     else {
         agregarProductoCarrito();
-        window.location = "http://localhost:3000/html/carrito.html"
+        window.location = `http://${prod}/html/carrito.html`;
     }
 }
 
@@ -106,7 +111,7 @@ async function agregarProductoCarrito() {
     let idUsuario = Number(window.sessionStorage.getItem("idUser"));
     let idArticulo = Number(articulo.idArticulo);
     if (!window.sessionStorage.getItem("userLogged")) {
-        window.location = "http://localhost:3000/html/loginUser.html";
+        window.location = `http://${prod}/html/loginUser.html`;
     } else {
 
         /* let producto = {
@@ -114,7 +119,7 @@ async function agregarProductoCarrito() {
          "precio": precio
      } */
         //---> aca aparece un error cuando el usuario ya esta logueado
-        let respuesta = await fetch(`http://localhost:3000/carrito/${idUsuario}/${idArticulo}`, {
+        let respuesta = await fetch(`/carrito/${idUsuario}/${idArticulo}`, {
 
             method: 'POST',
             headers: {

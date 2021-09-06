@@ -7,24 +7,24 @@ async function ingresar() {
     let password = document.querySelector('.pwd').value;
     let user = {
         "email": correo,
-        "password":password
+        "password": password
     }
- 
+
     // let container = document.querySelector(".form");
     // voy a buscar los valores cargados en los inputs
     //observo los valores con los q intenta ingresar
     // console.log(correo);
     // console.log(password);
-    
-     //VERSION PRUEBA FRONT
-        // if (correo === usuario.email && password === usuario.password){
-        //     container.innerHTML = `<h2>Bienvenido ${correo}</h2>`
-        // }
-        // else{
-        // alert();}
-        // fetch con csv de login 'http://localhost:3000/login/validate'
-    
-    let respuesta = await fetch('http://localhost:3000/usuario/login', {
+
+    //VERSION PRUEBA FRONT
+    // if (correo === usuario.email && password === usuario.password){
+    //     container.innerHTML = `<h2>Bienvenido ${correo}</h2>`
+    // }
+    // else{
+    // alert();}
+    // fetch con csv de login 'http://localhost:3000/login/validate'
+
+    let respuesta = await fetch('/usuario/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -33,20 +33,20 @@ async function ingresar() {
     });
     if (respuesta.ok) {
         const logueado = await respuesta.json();
-         console.log(logueado);
+        console.log(logueado);
         // user = respuesta.json(); 
-        console.log("Bienvenido/a ",logueado.email);
+        console.log("Bienvenido/a ", logueado.email);
         window.sessionStorage.setItem("userLogged", true);
         window.sessionStorage.setItem("user", logueado.email);
         window.sessionStorage.setItem("idUser", logueado.idUsuario);
         window.sessionStorage.setItem("esAdmin", logueado.esAdmin);
-        if (logueado.esAdmin){
-            window.location="http://localhost:3000/html/administrador.html"
+        if (logueado.esAdmin) {
+            window.location = `http://tp-forhome.herokuapp.com/html/administrador.html`;
         }
         else
-            window.location="http://localhost:3000";
+            window.location = "http://tp-forhome.herokuapp.com";
     }
-    else{
+    else {
         alert("DATOS INGRESADOS NO VALIDOS!!");
     }
     ///////////////////////////// codigo mock //////////////////////////////
@@ -75,6 +75,6 @@ async function ingresar() {
 
 // ingresar();
 
-function cerrarSesion(){
+function cerrarSesion() {
     window.sessionStorage.clear();
 }
